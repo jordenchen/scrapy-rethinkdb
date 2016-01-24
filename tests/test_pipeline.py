@@ -130,7 +130,7 @@ class RethinkDBPipelineTest(unittest.TestCase):
             item
         )
         self.pipeline.table.insert.assert_called_once_with(
-            item._values
+            item
         )
         self.pipeline.driver.execute.assert_called_once_with(
             self.pipeline.table.insert.return_value

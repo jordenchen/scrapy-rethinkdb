@@ -80,7 +80,7 @@ class RethinkDBPipeline(object):
         @param item: the item scraped
         @returns Document that represents the item.
         """
-        return item._values
+        return item # ._values
 
     def before_insert(self, item):
         """
