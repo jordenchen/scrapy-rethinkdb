@@ -59,7 +59,7 @@ class RethinkDBPipeline(object):
         @param spider: the spider which scraped the item
         @returns Item to be processed by the next pipelines (if any).
         """
-        if not isinstance(item, Item):
+        if not isinstance(item, (Item, dict)):
             spider.log.msg('Item not valid for RethinkDBPipeline <%s>. '
                            'Ignoring item.' % item,
                            level=spider.log.WARNING)
