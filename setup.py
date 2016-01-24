@@ -3,7 +3,7 @@ from pip.req import parse_requirements
 
 setup(
     name='scrapy-rethinkdb',
-    version='0.0.4',
+    version='0.1.1',
     author='sprij',
     author_email='s.rijo@yahoo.com',
     description='Scrapy pipeline for rethinkdb.',
@@ -14,7 +14,7 @@ setup(
     long_description=__doc__,
     install_requires=[
         str(install_req.req)
-        for install_req in parse_requirements('requirements.txt')
+        for install_req in parse_requirements('requirements.txt', session=False)
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
