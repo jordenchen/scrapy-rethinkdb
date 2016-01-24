@@ -1,6 +1,6 @@
 #scrapy-rethinkdb
 --------------------
-[![Build Status](https://travis-ci.org/sprij/scrapy-rethinkdb.png)](https://travis-ci.org/sprij/scrapy-rethinkdb)
+[![Build Status](https://travis-ci.org/ownport/scrapy-rethinkdb.png)](https://travis-ci.org/ownport/scrapy-rethinkdb)
 
 Pipeline to insert documents to a RethinkDB table.
 
