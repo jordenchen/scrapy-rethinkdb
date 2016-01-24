@@ -1,2 +1,2 @@
-Scrapy>=0.22.0
-rethinkdb>=1.13.0
+Scrapy>=1.0.0
+rethinkdb>=2.2.0
