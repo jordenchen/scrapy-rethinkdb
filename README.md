@@ -7,9 +7,9 @@ Pipeline to insert documents to a RethinkDB table.
 The minimal configuration requires defining the pipeline in the item pipelines
 and a table name.
 
-    ITEM_PIPELINES = [
-      'scrapy_rethinkdb.RethinkDBPipeline',
-    ]
+    ITEM_PIPELINES = {
+      'scrapy_rethinkdb.RethinkDBPipeline': 300,
+    }
 
     RETHINKDB_TABLE = 'items'
 
