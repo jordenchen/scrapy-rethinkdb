@@ -11,6 +11,9 @@ dev-env-run:
 		ownport/scrapy-rethinkdb:dev \
 		/usr/local/sbin/run-as.sh dev 1000 /bin/sh
 
+dev-env-remove:
+	docker rmi ownport/scrapy-rethinkdb:dev
+
 test-all:
 	nosetests
 
