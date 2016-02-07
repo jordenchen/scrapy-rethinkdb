@@ -14,19 +14,19 @@ class RethinkDBPipeline(object):
 
         # get relevant settings for the pipeline
         connection_settings = settings.get('RETHINKDB_CONNECTION', {})
-        table_name = settings.get('RETHINKDB_TABLE', None)
+        table_mapping = settings.get('RETHINKDB_TABLE_MAPPING', None)
         insert_options = settings.get('RETHINKDB_INSERT_OPTIONS', {})
 
         # creates driver instance
         driver = RethinkDBDriver(connection_settings)
 
-        return cls(driver, table_name, insert_options)
+        return cls(driver, table_mapping, insert_options)
 
-    def __init__(self, driver, table_name, insert_options):
+    def __init__(self, driver, table_mapping, insert_options):
         """Rethinkdb pipeline for Scrapy processed items.
 
         @param driver: rethinkdb driver
-        @param table_name: rethinkdb driver
+        @param table_mapping: table mapping, item -> table name
         @param insert_options: options to be used when inserting documents
 
         @raises NotConfigured: if any of the constructor arguments wasn't
@@ -39,12 +39,16 @@ class RethinkDBPipeline(object):
         else:
             self.driver = driver
 
-        # check if table name provided
-        if not table_name:
-            raise NotConfigured("Table name not provided.")
-        else:
-            # get table reference from driver
-            self.table = self.driver.get_table(table_name)
+        # check if table mapping provided
+        if not table_mapping:
+            raise NotConfigured("The variable RETHINKDB_TABLE_MAPPING is not defined in settings.py")
+        elif not isinstance(table_mapping, dict):
+            raise NotConfigured("The variable RETHINKDB_TABLE_MAPPING shall be specified as dictionary: item -> table")
+        
+        # get table references from driver
+        self.table_mapping = dict()
+        for item in table_mapping:
+                self.table_mapping[item] = self.driver.get_table(table_mapping[item]) 
 
         # check if insert options not provided
         if insert_options is None:
@@ -59,7 +63,7 @@ class RethinkDBPipeline(object):
         @param spider: the spider which scraped the item
         @returns Item to be processed by the next pipelines (if any).
         """
-        if not isinstance(item, (Item, dict)):
+        if not isinstance(item, Item):
             spider.log.msg('Item not valid for RethinkDBPipeline <%s>. '
                            'Ignoring item.' % item,
                            level=spider.log.WARNING)
@@ -67,7 +71,8 @@ class RethinkDBPipeline(object):
 
         self.before_insert(item)
         document = self.get_document(item)
-        insert_stmt = self.table.insert(document, **self.insert_options)
+
+        insert_stmt = self.table_mapping[item.__class__.__name__].insert(document, **self.insert_options)
         insert_result = self.driver.execute(insert_stmt)
         self.after_insert(item, insert_result)
 
