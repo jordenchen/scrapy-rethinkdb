@@ -15,7 +15,7 @@ RETHINKDB_TABLE_MAPPING = {
 }
 ```
 
-The connection will be created with the defaults of RethinkDB's python driver (see [http://www.rethinkdb.com/api/python/connect/](http://www.rethinkdb.com/api/python/connect/)) unless is overwritten as in the following example to use the database called scrapydb:
+The connection will be created with the defaults of RethinkDB's python driver (see [http://www.rethinkdb.com/api/python/connect/](http://www.rethinkdb.com/api/python/connect/)) unless is overwritten as in the following example to use the database called yourdatabase:
 
 ```python
 RETHINKDB_CONNECTION = {
