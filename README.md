@@ -11,7 +11,7 @@ ITEM_PIPELINES = {
   'scrapy_rethinkdb.RethinkDBPipeline': 300,
 }
 RETHINKDB_TABLE_MAPPING = {
-    'Item': 'items',
+    'YourscrapyItem': 'yourtable',
 }
 ```
 
@@ -19,7 +19,7 @@ The connection will be created with the defaults of RethinkDB's python driver (s
 
 ```python
 RETHINKDB_CONNECTION = {
-    'db': 'scrapydb'
+    'db': 'yourdatabase'
 }
 ```
 
